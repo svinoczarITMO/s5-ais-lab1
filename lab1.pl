@@ -20,6 +20,7 @@ block(grass).
 block(vines).
 block(fern).
 
+
 % FACTS (2):
 % tools
 tool(hand, 0).
@@ -69,30 +70,29 @@ obtained_by_pickaxe(Block, Tool) :-
     obtained_with_tool(Block, MinimumTool), 
     pickaxe_is_better(Tool, MinimumTool). % Finding the better tool
 
-is_block_natural(Block) :- 
-    Block \= glass;
-    Block \= bricks;
+is_natural(Block) :- 
+    Block \= glass,
+    Block \= bricks,
     Block \= concrete.
 
-is_block_manmade(Block) :-
+is_manmade(Block) :-
     Block == glass;
     Block == bricks;
-    Block == concrete.
+    Block == concrete.,
 
 
-
-% Check
+s
+% Check (tests)
 :- begin_tests(block_tests).
 test(obtained_by_pickaxe_iron) :- obtained_by_pickaxe(iron_ore, stone_pickaxe). % true
 test(obtained_by_pickaxe_obsidian) :- obtained_by_pickaxe(obsidian, diamond_pickaxe). % true
 test(obtained_by_pickaxe_diamond) :- obtained_by_pickaxe(diamond_ore, wooden_pickaxe). % false
 test(obtained_by_shears_oak) :- obtained_by_shears(oak_leaves, shears). % true
 test(obtained_by_shears_stone) :- obtained_by_shears(stone, shears). % false
-test(is_natural_grass) :- is_block_natural(grass). % true
-test(is_manmade_glass) :- is_block_manmade(glass). % true
-test(is_manmade_fern) :- is_block_manmade(fern). % false
-
+test(is_natural_grass) :- is_natural(grass). % true
+test(is_manmade_glass) :- is_manmade(glass). % true
+test(is_manmade_fern) :- is_manmade(fern). % false
 :- end_tests(block_tests).
 
 % Run tests
-:- run_tests.
+% :- run_tests.
